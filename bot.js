@@ -4,12 +4,6 @@ var baseUrl = process.env.LOGTACTS_URL
 var options = {
   headers: {}
 }
-function searchCallback(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    var results = JSON.parse(body)
-    console.log(results)
-  }
-}
 
 var controller = Botkit.slackbot({
   debug: false,
@@ -97,6 +91,10 @@ controller.hears('^find', 'direct_message', function(bot,message){
           for (var i=0; i<results.length; i++) {
             bot.reply(message, {attachments:[makeAttachment(results[i])]})
           }
+        } else {
+          bot.reply(message, {
+            text: "Hmm... something went wrong. Try double-checking your auth token?"
+          })
         }
       }
       request(options, searchCallback)

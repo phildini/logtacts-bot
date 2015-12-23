@@ -27,3 +27,5 @@ build/Release
 node_modules
 
 bot_store
+bot-pm.json
+
