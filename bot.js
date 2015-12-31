@@ -1,6 +1,7 @@
 var Botkit = require('botkit')
 var request = require('request')
-var baseUrl = process.env.LOGTACTS_URL
+var utils = require('./utils')
+var baseUrl = process.env.LOGTACTS_URL || 'https://www.logtacts.com/'
 var options = {
   headers: {}
 }
@@ -17,40 +18,6 @@ controller.spawn({
     console.error(err)
   }
 })
-
-function makeAttachment(contact) {
-  var url = baseUrl + contact.id
-  attachment = {
-    fallback: contact.name + ' ' + url,
-    title: contact.name,
-    title_link: url,
-  }
-  if (contact.address) {
-    attachment.text = contact.address
-  }
-  attachment.fields = []
-  if (contact.cell_phone) {
-    attachment.fields.push({
-      title: 'Phone',
-      value: contact.cell_phone,
-      short: true
-    })
-  } else if (contact.home_phone) {
-    attachment.fields.push({
-      title: 'Phone',
-      value: contact.home_phone,
-      short: true
-    })
-  }
-  if (contact.twitter) {
-    attachment.fields.push({
-      title: 'Twitter',
-      value: contact.twitter,
-      short: true
-    })
-  }
-  return attachment
-}
 
 controller.hears('^auth', 'direct_message', function(bot, message){
   var parts = message.text.split(' ')
@@ -89,7 +56,7 @@ controller.hears('^find', 'direct_message', function(bot,message){
           })
           var attachments = []
           for (var i=0; i<results.length; i++) {
-            bot.reply(message, {attachments:[makeAttachment(results[i])]})
+            bot.reply(message, {attachments:[utils.makeAttachment(results[i], baseUrl)]})
           }
         } else {
           bot.reply(message, {

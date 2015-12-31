@@ -4,13 +4,13 @@
   "description": "A bot for talking to logtacts",
   "main": "bot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tap test.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/phildini/logtacts-bot.git"
   },
-  "author": "",
+  "author": "Philip James",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/phildini/logtacts-bot/issues"
@@ -18,6 +18,7 @@
   "homepage": "https://github.com/phildini/logtacts-bot#readme",
   "dependencies": {
     "botkit": "0.0.4",
-    "request": "^2.67.0"
+    "request": "^2.67.0",
+    "tap": "^4.0.0"
   }
 }
